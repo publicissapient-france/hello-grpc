@@ -8,7 +8,7 @@ import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AppCompatActivity
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_hello_world.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -17,13 +17,13 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+class HelloWorldActivity : AppCompatActivity() {
 
     private var channel: ManagedChannel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_hello_world)
 
         grpc_response_text.movementMethod = ScrollingMovementMethod()
 

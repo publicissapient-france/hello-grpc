@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "fr.xebia.hellogrpc";
+option java_outer_classname = "PokedexProto";
+option objc_class_prefix = "PD";
+
+package pokedex;
+
+// The greeting service definition.
+service Pokedex {
+    // get information of a Pokémon in French
+    rpc GetPokemon (PokedexRequest) returns (PokedexReply) {}
+}
+
+// The request message containing the Pokémon's English name.
+message PokedexRequest {
+    string englishName = 1;
+}
+
+// The response message containing the Pokémon's information in French
+message PokedexReply {
+    int32 id = 1;
+    string frenchName = 2;
+    string type = 3;
+    string imageUrl = 4;
+}
