@@ -15,7 +15,7 @@
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Enter Host" />
+            android:hint="@string/enter_host" />
 
         <EditText
             android:id="@+id/port_edit_text"
@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:hint="Enter Port" />
+            android:hint="@string/enter_port" />
     </LinearLayout>
 
 
@@ -31,13 +31,13 @@
         android:id="@+id/message_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter message to send" />
+        android:hint="@string/enter_message_to_send" />
 
     <Button
         android:id="@+id/send_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send Grpc Request" />
+        android:text="@string/send_grpc_request" />
 
     <TextView
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
         android:textSize="16sp"
-        android:text="Response:" />
+        android:text="@string/response" />
 
     <TextView
         android:id="@+id/grpc_response_text"

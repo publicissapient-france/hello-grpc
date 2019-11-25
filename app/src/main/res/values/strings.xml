@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">hellogrpc</string>
+    <string name="enter_host">Enter Host</string>
+    <string name="enter_port">Enter Port</string>
+    <string name="enter_message_to_send">Enter message to send</string>
+    <string name="send_grpc_request">Send Grpc Request</string>
+    <string name="response">Response:</string>
 </resources>
