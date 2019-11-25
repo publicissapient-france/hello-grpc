@@ -5,27 +5,26 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.WorkerThread
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import io.grpc.ManagedChannel
-import io.grpc.ManagedChannelBuilder
+import io.grpc.StatusRuntimeException
 import kotlinx.android.synthetic.main.activity_pokedex.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
 
 class PokedexActivity : AppCompatActivity() {
 
-    private var channel: ManagedChannel? = null
+    private val viewModel: PokedexViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokedex)
 
         pokedex_response_name.movementMethod = ScrollingMovementMethod()
+        viewModel.pokemonLiveDate.observe(this, Observer {
+            onGetPokemon(it)
+        })
 
         send_button.setOnClickListener {
             (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
@@ -33,54 +32,50 @@ class PokedexActivity : AppCompatActivity() {
             send_button.isEnabled = false
             pokedex_response_name.text = ""
 
-            GlobalScope.launch {
-                val result = getPokemon(
-                    host_edit_text.text.toString(),
-                    port_edit_text.text.toString(),
-                    pokemon_en_name_edit_text.text.toString()
-                )
-                withContext(Dispatchers.Main) {
-                    send_button.isEnabled = true
-                    result?.let {
-                        onMessageReceived(it.frenchName, it.type, it.imageUrl)
-                    }
+            viewModel.getPokemon(
+                host_edit_text.text.toString(),
+                port_edit_text.text.toString(),
+                pokemon_en_name_edit_text.text.toString()
+            )
+        }
+    }
+
+    private fun onGetPokemon(result: GetPokemonResult) {
+        send_button.isEnabled = true
+
+        when (result) {
+            is GetPokemonResult.Success -> {
+                if (result.reply.frenchName.isNotEmpty()) {
+                    question_mark.visibility = View.GONE
+                    pokedex_response_name.visibility = View.VISIBLE
+                    pokedex_response_type.visibility = View.VISIBLE
+                    pokedex_response_image.visibility = View.VISIBLE
+
+                    pokedex_response_name.text = result.reply.frenchName
+                    pokedex_response_type.text = result.reply.type
+                    Glide.with(this)
+                        .load(result.reply.imageUrl)
+                        .into(pokedex_response_image)
+                } else {
+                    resetUI()
+                    Toast.makeText(this, R.string.no_result, Toast.LENGTH_LONG).show()
+                }
+            }
+            is GetPokemonResult.Error -> {
+                resetUI()
+                if (result.exception is StatusRuntimeException) {
+                    Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, R.string.error_response, Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
-    private fun onMessageReceived(frenchName: String, type: String, imageUrl: String) {
-        try {
-            channel?.shutdown()?.awaitTermination(1, TimeUnit.SECONDS)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        question_mark.visibility = View.GONE
-        pokedex_response_name.visibility = View.VISIBLE
-        pokedex_response_type.visibility = View.VISIBLE
-        pokedex_response_image.visibility = View.VISIBLE
-
-        pokedex_response_name.text = frenchName
-        pokedex_response_type.text = type
-        Glide.with(this)
-            .load(imageUrl)
-            .into(pokedex_response_image)
-    }
-
-    @WorkerThread
-    suspend fun getPokemon(host: String, portStr: String, message: String): PokedexReply? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val port = if (portStr.isEmpty()) 0 else portStr.toInt()
-                val channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build()
-                val stub = PokedexGrpc.newBlockingStub(channel)
-                val request = PokedexRequest.newBuilder().setEnglishName(message.trim()).build()
-                val reply = stub.getPokemon(request)
-                reply
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            }
-        }
+    private fun resetUI() {
+        question_mark.visibility = View.VISIBLE
+        pokedex_response_name.visibility = View.GONE
+        pokedex_response_type.visibility = View.GONE
+        pokedex_response_image.visibility = View.GONE
     }
 }

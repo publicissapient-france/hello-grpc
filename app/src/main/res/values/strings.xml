@@ -9,6 +9,9 @@
     <string name="response">Response:</string>
 
     <string name="enter_pokemon_name">Enter Pokemon Name</string>
-    <string name="get_pokemon_info">Get Pokemon Info</string>
+    <string name="get_pokemon_info">Get Pokémon Info</string>
     <string name="question_mark">\?</string>
+    <string name="no_connection">Unable to connect to server.</string>
+    <string name="error_response">Oops, something went wrong!</string>
+    <string name="no_result">Can not find the pokemon you are looking for!</string>
 </resources>

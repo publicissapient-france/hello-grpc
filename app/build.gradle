@@ -25,37 +25,42 @@ android {
 dependencies {
     protobuf files("../protobuf/")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
-    implementation "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "javax.annotation:javax.annotation-api:$javaxAnnotationVersion"
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
 
-    implementation "io.grpc:grpc-okhttp:${grpcVersion}"
-    implementation "io.grpc:grpc-protobuf-lite:${grpcVersion}"
-    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    implementation "io.grpc:grpc-okhttp:$grpcVersion"
+    implementation "io.grpc:grpc-protobuf-lite:$grpcVersion"
+    implementation "io.grpc:grpc-stub:$grpcVersion"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
 
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
-    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    testImplementation 'junit:junit:4.12'
 }
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:${protocVesrion}"
+        artifact = "com.google.protobuf:protoc:$protocVesrion"
     }
     plugins {
         javalite {
             artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
         }
         grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.24.0' // CURRENT_grpcVersion
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
         }
     }
     generateProtoTasks {

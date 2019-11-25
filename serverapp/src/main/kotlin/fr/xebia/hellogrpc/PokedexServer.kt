@@ -7,7 +7,7 @@ import java.io.IOException
 import java.util.logging.Level
 import java.util.logging.Logger
 
-class PokemonServer {
+class PokedexServer {
 
     // The port on which the server should run
     private val port = 50052
@@ -37,7 +37,7 @@ class PokemonServer {
             override fun run() {
                 // Use stderr here since the logger may have been reset by its JVM shutdown hook.
                 System.err.println("*** shutting down gRPC server since JVM is shutting down")
-                this@PokemonServer.stop()
+                this@PokedexServer.stop()
                 System.err.println("*** server shut down")
             }
         })
@@ -94,7 +94,7 @@ class PokemonServer {
         @Throws(IOException::class, InterruptedException::class)
         @JvmStatic
         fun main(args: Array<String>) {
-            val server = PokemonServer()
+            val server = PokedexServer()
             server.start()
             server.blockUntilShutdown()
         }
