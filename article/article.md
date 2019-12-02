@@ -326,8 +326,8 @@ To test this implementation, start the application and connect to the Pokédex s
 
 # Conclusion
 
-Building a mobile application is actually harder than it appears. We are constantly concerning about the battery usage, celluar data consumption, connection latency, device storage and security. The list goes on and on. A good mobile application should take account of all these criterias.
+Building a mobile application is actually harder than it appears. We are constantly concerning about things such as battery usage, celluar data consumption, connection latency, device storage or security. The list goes on and on. A good mobile application should take account of all these criterias. But our current solutions are full of vulnerabilities. 
 
-gRPC is still a little bit premature but we are starting to see more and more production application using gRPC. It gives us a different perspective on how to tackle mobile platform's restrictions.
+ We start to see more and more production applications using gRPC. gRPC is still a little bit premature but it is also quite promising. It gives us a perspective on how to tackle mobile platform's restrictions differently.
 
-
+ And most of all, it was fun experimenting!
