@@ -55,9 +55,7 @@ class PokedexServer {
         server?.awaitTermination()
     }
 
-    internal class PokedexImpl(
-        private val pokemons: List<Pokemon>
-    ) : PokedexGrpc.PokedexImplBase() {
+    internal class PokedexImpl(private val pokemons: List<Pokemon>) : PokedexGrpc.PokedexImplBase() {
 
         private val baseUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
 
@@ -73,11 +71,13 @@ class PokedexServer {
 
             val reply = if (resultPokemon != null) {
                 PokedexReply.newBuilder()
+                    .setId(resultPokemon.id)
                     .setFrenchName(resultPokemon.frenchName)
                     .setType(resultPokemon.type)
                     .setImageUrl("$baseUrl${resultPokemon.id}.png")
                     .build()
             } else {
+                // No pokémon is found return a null
                 PokedexReply.newBuilder().build()
             }
             responseObserver.onNext(reply)
