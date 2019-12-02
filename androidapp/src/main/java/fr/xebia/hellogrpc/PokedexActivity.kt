@@ -45,28 +45,34 @@ class PokedexActivity : AppCompatActivity() {
 
         when (result) {
             is GetPokemonResult.Success -> {
-                if (result.reply.frenchName.isNotEmpty()) {
-                    question_mark.visibility = View.GONE
-                    pokedex_response_name.visibility = View.VISIBLE
-                    pokedex_response_type.visibility = View.VISIBLE
-                    pokedex_response_image.visibility = View.VISIBLE
+                when {
+                    result.reply.frenchName.isNotEmpty() -> {
+                        question_mark.visibility = View.GONE
+                        pokedex_response_name.visibility = View.VISIBLE
+                        pokedex_response_type.visibility = View.VISIBLE
+                        pokedex_response_image.visibility = View.VISIBLE
 
-                    pokedex_response_name.text = result.reply.frenchName
-                    pokedex_response_type.text = result.reply.type
-                    Glide.with(this)
-                        .load(result.reply.imageUrl)
-                        .into(pokedex_response_image)
-                } else {
-                    resetUI()
-                    Toast.makeText(this, R.string.no_result, Toast.LENGTH_LONG).show()
+                        pokedex_response_name.text = result.reply.frenchName
+                        pokedex_response_type.text = result.reply.type
+                        Glide.with(this)
+                            .load(result.reply.imageUrl)
+                            .into(pokedex_response_image)
+                    }
+                    else -> {
+                        resetUI()
+                        Toast.makeText(this, R.string.no_result, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
             is GetPokemonResult.Error -> {
                 resetUI()
-                if (result.exception is StatusRuntimeException) {
-                    Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(this, R.string.error_response, Toast.LENGTH_LONG).show()
+                when (result.exception) {
+                    is StatusRuntimeException -> {
+                        Toast.makeText(this, R.string.no_connection, Toast.LENGTH_LONG).show()
+                    }
+                    else -> {
+                        Toast.makeText(this, R.string.error_response, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

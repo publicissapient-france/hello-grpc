@@ -13,7 +13,7 @@ repositories {
 dependencies {
     protobuf files("../protobuf/")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.60"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     implementation "io.grpc:grpc-netty-shaded:$grpcVersion"
     implementation "io.grpc:grpc-protobuf:$grpcVersion"
@@ -35,14 +35,8 @@ protobuf {
         }
     }
     generateProtoTasks {
-        all()*.plugins { grpc {} }
-    }
-    generatedFilesBaseDir = "$projectDir/build/generated"
-}
-
-idea {
-    module {
-        sourceDirs += file("${protobuf.generatedFilesBaseDir}/main/java");
-        sourceDirs += file("${protobuf.generatedFilesBaseDir}/main/grpc");
+        ofSourceSet("main").forEach {
+            it.plugins { grpc {} }
+        }
     }
 }

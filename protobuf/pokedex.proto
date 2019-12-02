@@ -7,9 +7,8 @@ option objc_class_prefix = "PD";
 
 package pokedex;
 
-// The greeting service definition.
 service Pokedex {
-    // get information of a Pokémon in French
+    // Get information of a Pokémon in French
     rpc GetPokemon (PokedexRequest) returns (PokedexReply) {}
 }
 
