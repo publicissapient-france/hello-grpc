@@ -1,8 +1,8 @@
 gRPC in action
 ==============
 
-- `protobuf`: service definition:
-- `androidapp`: the Android application
+- `protobuf`: service definitions
+- `androidapp`: the Android app
 - `serverapp`: the server app 
 
 There are 2 examples:
@@ -10,4 +10,6 @@ There are 2 examples:
   - and a slightly advanced `Pokédex` example: it retrieves the pokémon's information 
   in French when searching with its English name
 
-![pokedex-app](pokedex-app.png)
+![pokedex-app](article/pokedex-app.png)
+
+The full article can be found [here](article/article.md)

@@ -48,10 +48,12 @@ class PokedexActivity : AppCompatActivity() {
                 when {
                     result.reply.frenchName.isNotEmpty() -> {
                         question_mark.visibility = View.GONE
+                        pokedex_response_number.visibility = View.VISIBLE
                         pokedex_response_name.visibility = View.VISIBLE
                         pokedex_response_type.visibility = View.VISIBLE
                         pokedex_response_image.visibility = View.VISIBLE
 
+                        pokedex_response_number.text = getString(R.string.pokedex_number, result.reply.id)
                         pokedex_response_name.text = result.reply.frenchName
                         pokedex_response_type.text = result.reply.type
                         Glide.with(this)
@@ -80,6 +82,7 @@ class PokedexActivity : AppCompatActivity() {
 
     private fun resetUI() {
         question_mark.visibility = View.VISIBLE
+        pokedex_response_number.visibility = View.GONE
         pokedex_response_name.visibility = View.GONE
         pokedex_response_type.visibility = View.GONE
         pokedex_response_image.visibility = View.GONE
