@@ -1,21 +1,21 @@
 Post-REST: Build your next Android app with gRPC
 ================================================
 
-RESTful API has been around for almost 20 years. First introduced and defined [by Roy Fielding in 2000](https://en.wikipedia.org/wiki/Representational_state_transfer) in parallel with HTTP 1.1, it has been a pillar of the web services building. As years go by, we see more and more constraints of a typical RESTful service, mostly caused by some fundamental deficiencies in the design of HTTP 1.1. Google has actively participated the definition of a new protocol. Its former alternative to HTTP1.x, SPDY, is now part of HTTP/2 protocol, aiming to build a faster and safer internet.
+RESTful API has been around for almost 20 years. First introduced and defined [by Roy Fielding in 2000](https://en.wikipedia.org/wiki/Representational_state_transfer) in parallel with HTTP 1.1, it has been a pillar of building web services. As years go by, we see more and more constraints of a typical RESTful service, mostly caused by some fundamental deficiencies in the design of HTTP 1.1. Google has actively participated in the definition of a new protocol. Its former alternative to HTTP1.x, SPDY, is now part of HTTP/2 protocol, aiming to build a faster and safer internet.
 
-In recent years, companies started to embrace different approaches to solve their problems. We are seeing more and more projects using [GraphQL](https://graphql.org/learn/) to build more flexible web service; one of the alternativea that caught my eyes is gRPC.
+In recent years, companies started to embrace different approaches to solve their problems. We are seeing more and more projects using [GraphQL](https://graphql.org/learn/) to build more flexible web services; one of the alternatives that caught my eyes is gRPC.
 
 # What is gRPC?
 
-I'm an Android developer on daily basis. I first came across this page among other Android documentations: [Build client-server applications with gRPC](https://developer.android.com/guide/topics/connectivity/grpc), gRPC was not completely alien to me since my coworkers have been discussing it enthusiastically for a while.
+I'm an Android developer on a daily basis. I first came across this page among other Android documentations: [Build client-server applications with gRPC](https://developer.android.com/guide/topics/connectivity/grpc), gRPC was not completely alien to me since my coworkers had been discussing it enthusiastically for a while.
 
 gRPC is a new take on an old approach known as RPC ([Remote Procedure Call](https://en.wikipedia.org/wiki/Remote_procedure_call)), a form of inter-process communication essentially used for client-server interactions. The client can request to execute a procedure on the server as if it were a normal local procedure call thanks to the stub generated for both client and server.
 
 The typical sequence of the RPC events runs like this:
 
 - The client calls the client stub with parameters provided in the normal way
-- The client stub then builts a message (marshaling) with the parameters and makes a system call to send the message to the server 
-- The message is sent to the server by the client's local operating system sends 
+- The client stub then builts a message (marshalling) with the parameters and makes a system call to send the message to the server 
+- The message is sent to the server by the client's local operating system 
 - The server's local operating system passes the incoming message to the server stub
 - The server stub unpacks the parameters from the message (unmarshalling)
 - At the end the server stub calls the server procedure with the parameters
@@ -26,7 +26,7 @@ Base on the same principle, [gRPC](https://grpc.io/) is an open-source RPC frame
 
 # REST v.s. gRPC
 
-To grasp why gRPC is a fundemantally different approach to build web service. Let's do a [side-by-side comparison](https://speakerdeck.com/thesandlord/grpc-vs-rest-api-strat-2016) between REST and gRPC.
+To grasp why gRPC is a fundemantally different approach to build web services. Let's do a [side-by-side comparison](https://speakerdeck.com/thesandlord/grpc-vs-rest-api-strat-2016) between REST and gRPC.
 
 REST is basically JSON over HTTP 1.1 and gRPC is basically Protobuf over HTTP/2 with POST and choosing gRPC for a new project is still pretty experimental at the time of writing.
 
@@ -50,7 +50,7 @@ REST is basically JSON over HTTP 1.1 and gRPC is basically Protobuf over HTTP/2 
 
 # gRPC in action: Pokédex
 
-In order to demonstrate how gRPC can be used in a real project. I decided to build a simple Pokédex, which allows me to enter a Pokémon's English name and retrieve its Pokédex number, name in French, type in French and image. 
+In order to demonstrate how gRPC can be used in a real project, I decided to build a simple Pokédex, which allows me to enter a Pokémon's English name and retrieve its Pokédex number, name in French, type in French and image. 
 
 Why French though? Because ever since I live in France I realize that the Pokémon naming system is quite different here, for example Jigglypuff is called Rondoudou in French, which is total cuteness overflow. 
 
@@ -234,13 +234,13 @@ class PokedexServer {
 
 Once you finish implementing the server side logic, you can write a test to see if the server returns the expected value. There are examples that you can find on [github](https://github.com/grpc/grpc-java/tree/master/examples). gRPC provides classes such as `GrpcCleanupRule`, `InProcessServerBuilder` to make unit testing easier.
 
-You can check [here](https://github.com/xebia-france/hello-grpc/blob/master/serverapp/src/main/kotlin/fr/xebia/hellogrpc/PokedexServer.kt) to see the full implementation of `PokedexServer` and [here](https://github.com/xebia-france/hello-grpc/blob/master/serverapp/src/test/kotlin/fr/xebia/hellogrpc/PokedexServerTest.kt) for its unit test.
+You can check [PokedexServer](https://github.com/xebia-france/hello-grpc/blob/master/serverapp/src/main/kotlin/fr/xebia/hellogrpc/PokedexServer.kt) to see the full implementation and [PokedexServerTest](https://github.com/xebia-france/hello-grpc/blob/master/serverapp/src/test/kotlin/fr/xebia/hellogrpc/PokedexServerTest.kt) for the unit test.
 
 ## 4. Build the Pokédex app with Android
 
 Now that our server is up and running, it's time to build the client app. This is for me the most exciting part. Let's keep going o//
 
-If you are an Android developer, you have probably used OKHttp and Retrofit for making your network calls. gRPC provides dedicated plugin (`protoc-gen-javalite`) and libraries (`grpc-okhttp` and `grpc-protobuf-lite`) for Android platform:
+If you are an Android developer, you have probably used [OKHttp](https://square.github.io/okhttp/) and [Retrofit](https://square.github.io/retrofit/) for making your network calls. gRPC provides dedicated plugin (`protoc-gen-javalite`) and libraries (`grpc-okhttp` and `grpc-protobuf-lite`) for Android platform:
 
 Here is an extract of the `build.gradle` of my Android application:
 
@@ -278,7 +278,7 @@ protobuf {
 }
 ```
 
-To build the application the Android way, I introduced Architecture Components and Kotlin couroutines, along with the ViewModel kotlin extension.
+To build the application the Android way, I used Architecture Components and Kotlin couroutines, along with the [ViewModel kotlin extension](https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471).
 
 Here is the `getPokemon` call inside the `PokedexViewModel`, launched with the `ViewModelScope` in a coroutine, the response is then passed on to LiveData which is observed by my Activity:
 
