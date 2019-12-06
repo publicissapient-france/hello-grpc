@@ -7,26 +7,26 @@ In recent years, companies started to embrace different approaches to solve thei
 
 # What is gRPC?
 
-I'm an Android developer on a daily basis. I first came across this page among other Android documentations: [Build client-server applications with gRPC](https://developer.android.com/guide/topics/connectivity/grpc), gRPC was not completely alien to me since my coworkers had been discussing it enthusiastically for a while.
+I'm an Android developer on a daily basis. I first came across this page among other Android documentations: [Build client-server applications with gRPC](https://developer.android.com/guide/topics/connectivity/grpc) and gRPC was not completely alien to me since my coworkers had been discussing it enthusiastically for a while.
 
 gRPC is a new take on an old approach known as RPC ([Remote Procedure Call](https://en.wikipedia.org/wiki/Remote_procedure_call)), a form of inter-process communication essentially used for client-server interactions. The client can request to execute a procedure on the server as if it were a normal local procedure call thanks to the stub generated for both client and server.
 
 The typical sequence of the RPC events runs like this:
 
 - The client calls the client stub with parameters provided in the normal way
-- The client stub then builts a message (marshalling) with the parameters and makes a system call to send the message to the server 
+- The client stub then builds a message (marshalling) with the parameters and makes a system call to send the message to the server 
 - The message is sent to the server by the client's local operating system 
 - The server's local operating system passes the incoming message to the server stub
 - The server stub unpacks the parameters from the message (unmarshalling)
 - At the end the server stub calls the server procedure with the parameters
 
-Base on the same principle, [gRPC](https://grpc.io/) is an open-source RPC framework initially developed by Google and currently a [Cloud Native Computing Foundation](https://www.cncf.io/) incubating project. By default, gRPC uses HTTP/2 for transport and [Protocol Buffers](https://developers.google.com/protocol-buffers) as both its Interface Definition Language (IDL) and as its underlying message interchange format.
+Based on the same principle, [gRPC](https://grpc.io/) is an open-source RPC framework initially developed by Google and currently a [Cloud Native Computing Foundation](https://www.cncf.io/) incubating project. By default, gRPC uses HTTP/2 for transport and [Protocol Buffers](https://developers.google.com/protocol-buffers) as both its Interface Definition Language (IDL) and as its underlying message interchange format.
 
 ![gRPC-archi](gRPC-archi.png)
 
 # REST v.s. gRPC
 
-To grasp why gRPC is a fundemantally different approach to build web services. Let's do a [side-by-side comparison](https://speakerdeck.com/thesandlord/grpc-vs-rest-api-strat-2016) between REST and gRPC.
+To grasp why gRPC is a fundamentally different approach to build web services. Let's do a [side-by-side comparison](https://speakerdeck.com/thesandlord/grpc-vs-rest-api-strat-2016) between REST and gRPC.
 
 REST is basically JSON over HTTP 1.1 and gRPC is basically Protobuf over HTTP/2 with POST and choosing gRPC for a new project is still pretty experimental at the time of writing.
 
@@ -72,7 +72,7 @@ Let's start by defining the Pokédex service interfaces and the data structure o
 - Client side: the application takes a Pokémon's English name as input parameter
 - Server side: the application receives the Pokémon's English name and it returns the information of this Pokémon (Pokédex number, French name, type, image URL) if it can be found.
 
-Here is the `Pokedex.proto` with a simple unary implementation where client sends a single request to server and gets a single response back:
+Here is the `Pokedex.proto` with a simple unary implementation where the client sends a single request to the server and gets a single response back:
 
 ```protobuf
 syntax = "proto3";
@@ -111,9 +111,9 @@ There are in total 4 kinds of service method:
 
 In this article I'm not going to deep dive into stream related RPCs, but you can find detailed explanation [here](https://grpc.io/docs/guides/concepts/).
 
-## 2. Generate Java binding
+## 2. Generate Java bindings
 
-Once the service is defined, we need to generate the binding for the language of our choice. Currently gRPC supports most of the main stream programming languages. In this project I decide to use the [gRPC Java](https://github.com/grpc/grpc-java) implementation and code my server app with Kotlin.
+Once the service is defined, we need to generate the bindings for the language of our choice. Currently gRPC supports most of the main stream programming languages. In this project I decided to use the [gRPC Java](https://github.com/grpc/grpc-java) implementation and code my server app with Kotlin.
 
 Before jumping into the implementation, let's generate the binding manually to have a better idea of what is behind the scaffolding.
 
@@ -121,7 +121,7 @@ To generate the binding in Java we need 2 tools:
 - the [protocol buffer compiler](https://github.com/protocolbuffers/protobuf)
 - the [gRPC Java Codegen Plugin for Protobuf Compiler](https://github.com/grpc/grpc-java/tree/master/compiler)
 
-Make sure both tools are added to the PATH and now you can generate Java interface out of the service definition like this: 
+Make sure both tools are added to your `PATH`. You can now generate the Java interface out of the service definition like this: 
 
 ```
 $ protoc --plugin=protoc-gen-grpc-java --grpc-java_out=src/main/grpc --java_out=src/main/java/ --proto_path=src/main/proto pokedex.proto
@@ -135,7 +135,7 @@ $ protoc --plugin=protoc-gen-grpc-java --grpc-java_out=src/main/grpc --java_out=
 
 In the gRPC java output folder, you should be able to find the generated class `PokedexGrpc.java` which contains the stub of the service.
 
-In the java output folder, you should be able to find following generated classes which describe the request and the response objects:
+In the java output folder, you should be able to find the following generated classes which describe the request and the response objects:
 - `PokedexProto`
 - `PokedexReply`
 - `PokedexReplyOrBuilder`
@@ -144,7 +144,7 @@ In the java output folder, you should be able to find following generated classe
 
 ## 3. Implement the server side logic
 
-Now that you have a better idea about what are generated behind the scene, let's move the project into IntelliJ and code a `PokedexServer`.
+Now that you have a better idea about what is generated behind the scene, let's move the project into IntelliJ and code a `PokedexServer`.
 
 Specify the usage of gRPC Java Codegen Plugin for Protobuf Compiler in the `build.gradle` and the code generation will be taken care of:
 ```
@@ -232,7 +232,7 @@ class PokedexServer {
 }
 ```
 
-Once you finish implementing the server side logic, you can write a test to see if the server returns the expected value. There are examples that you can find on [github](https://github.com/grpc/grpc-java/tree/master/examples). gRPC provides classes such as `GrpcCleanupRule`, `InProcessServerBuilder` to make unit testing easier.
+Once you finish implementing the server-side logic, you can write a test to see if the server returns the expected value. There are examples that you can find on [GitHub](https://github.com/grpc/grpc-java/tree/master/examples). gRPC provides classes such as `GrpcCleanupRule`, `InProcessServerBuilder` to make unit testing easier.
 
 You can check [PokedexServer](https://github.com/xebia-france/hello-grpc/blob/master/serverapp/src/main/kotlin/fr/xebia/hellogrpc/PokedexServer.kt) to see the full implementation and [PokedexServerTest](https://github.com/xebia-france/hello-grpc/blob/master/serverapp/src/test/kotlin/fr/xebia/hellogrpc/PokedexServerTest.kt) for the unit test.
 
@@ -326,7 +326,7 @@ To test this implementation, start the application and connect to the Pokédex s
 
 # Conclusion
 
-Building a mobile application is actually harder than it appears. We are constantly concerning about things such as battery usage, celluar data consumption, connection latency, device storage or security. The list goes on and on. A good mobile application should take account of all these criterias. But our current solutions are full of vulnerabilities. 
+Building a mobile application is actually harder than it appears. We are constantly concerning about things such as battery usage, celluar data consumption, connection latency, device storage or security. The list goes on and on. A good mobile application should take account of all these criterias. But our current solutions are full of pain points. Even if a little bit premature, gRPC tackles some of these by the means of a much faster exchange protocol and a good conveniency in writing the associated code, thanks to its support of the most widespread libraries and languages available. 
 
  We start to see more and more production applications using gRPC. gRPC is still a little bit premature but it is also quite promising. It gives us a perspective on how to tackle mobile platform's restrictions differently.
 
