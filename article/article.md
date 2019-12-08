@@ -59,7 +59,7 @@ Why French though? Because ever since I live in France I realize that the Pokém
 The sample project that I'm going to describe can be found here:
 https://github.com/xebia-france/hello-grpc. It contains a simple **Hello World** example and the **Pokédex** example:
 
-- Folder `proto` contains the `.proto` definitions
+- Folder `protobuf` contains the `.proto` definitions
 - Module `androidapp` is the client app in Android
 - Module `serverapp` is the server implemented in Kotlin with gRPC Java
 
