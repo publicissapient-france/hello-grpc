@@ -278,7 +278,8 @@ protobuf {
 }
 ```
 
-To build the application the Android way, I used Architecture Components and Kotlin couroutines, along with the [ViewModel kotlin extension](https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471).
+To build the application the Android way, I used Architecture Components and Kotlin 
+coroutines, along with the [ViewModel kotlin extension](https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471).
 
 Here is the `getPokemon` call inside the `PokedexViewModel`, launched with the `ViewModelScope` in a coroutine, the response is then passed on to LiveData which is observed by my Activity:
 
