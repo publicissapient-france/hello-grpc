@@ -326,6 +326,6 @@ To test this implementation, start the application and connect to the Pokédex s
 
 # Conclusion
 
-Building a mobile application is actually harder than it appears. We are constantly concerning about things such as battery usage, celluar data consumption, connection latency, device storage or security. The list goes on and on. A good mobile application should take account of all these criterias. But our current solutions are full of pain points. Even if a little bit premature, gRPC tackles some of these by the means of a much faster exchange protocol and a good conveniency in writing the associated code, thanks to its support of the most widespread libraries and languages available. 
+Building a mobile application is actually harder than it appears. We are constantly concerning about things such as battery usage, cellular data consumption, connection latency, device storage or security. The list goes on and on. A good mobile application should take account of all these criterias. But our current solutions are full of pain points. Even if a little bit premature, gRPC tackles some of these by the means of a much faster exchange protocol and a good conveniency in writing the associated code, thanks to its support of the most widespread libraries and languages available. 
 
 And most of all, it was fun experimenting!
