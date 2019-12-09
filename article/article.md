@@ -3,7 +3,7 @@ Post-REST: Build your next Android app with gRPC
 
 RESTful API has been around for almost 20 years. First introduced and defined [by Roy Fielding in 2000](https://en.wikipedia.org/wiki/Representational_state_transfer) in parallel with HTTP 1.1, it has been a pillar of building web services. As years go by, we see more and more constraints of a typical RESTful service, mostly caused by some fundamental deficiencies in the design of HTTP 1.1. Google has actively participated in the definition of a new protocol. Its former alternative to HTTP1.x, SPDY, is now part of HTTP/2 protocol, aiming to build a faster and safer internet.
 
-In recent years, companies started to embrace different approaches to solve their problems. We are seeing a growing number of projects projects using [GraphQL](https://graphql.org/learn/) to build more flexible web services; one of the alternatives that caught my eyes is gRPC.
+In recent years, companies started to embrace different approaches to solve their problems. We are seeing a growing number of projects using [GraphQL](https://graphql.org/learn/) to build more flexible web services; one of the alternatives that caught my eyes is gRPC.
 
 # What is gRPC?
 
