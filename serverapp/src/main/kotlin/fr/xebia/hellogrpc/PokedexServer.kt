@@ -6,6 +6,7 @@ import io.grpc.stub.StreamObserver
 import java.io.IOException
 import java.util.logging.Level
 import java.util.logging.Logger
+import io.grpc.protobuf.services.ProtoReflectionService;
 
 class PokedexServer {
 
@@ -30,6 +31,7 @@ class PokedexServer {
         }
         server = ServerBuilder.forPort(port)
             .addService(PokedexImpl(pokemons))
+            .addService(ProtoReflectionService.newInstance())
             .build()
             .start()
         logger.log(Level.INFO, "Server started, listening on {0}", port)
